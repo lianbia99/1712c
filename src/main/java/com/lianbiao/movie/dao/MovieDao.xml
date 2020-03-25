@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.lianbiao.movie.dao.MovieDao">
+	<select id="movieList" resultType="Movie">
+		select * from movie
+		<where>
+			<if test="name!=null and name!=''">
+				and name like '%${name}%'
+			</if>
+			<if test="dyname!=null and dyname!=''">
+				and dyname like '%${dyname}%'
+			</if>
+			<if test="ntime!=null and ntime !=''">
+				and ntime = #{ntime}
+			</if>
+			<if test="price1!=null">
+				and price &gt; #{price1}
+			</if>
+			<if test="price2!=null">
+				and price &lt; #{price2}
+			</if>
+		</where>
+	</select>
+
+	<delete id="del">
+		delete from movie where id in(#{ids})
+	</delete>
+	
+	<update id="updateZt">
+		update movie set ztai = #{zt} where id = ${id}
+	</update>
+</mapper>
